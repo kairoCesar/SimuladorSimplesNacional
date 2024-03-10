@@ -9,5 +9,4 @@ public class SimuladorSimplesNacionalApplication {
     public static void main(String[] args) {
         SpringApplication.run(SimuladorSimplesNacionalApplication.class, args);
     }
-
 }
