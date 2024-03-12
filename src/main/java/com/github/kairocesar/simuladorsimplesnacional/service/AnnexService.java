@@ -2,8 +2,7 @@ package com.github.kairocesar.simuladorsimplesnacional.service;
 
 import com.github.kairocesar.simuladorsimplesnacional.controller.dto.AnnexRequestDto;
 import com.github.kairocesar.simuladorsimplesnacional.controller.dto.AnnexResponseDto;
-import com.github.kairocesar.simuladorsimplesnacional.model.annexes.Annex;
-import com.github.kairocesar.simuladorsimplesnacional.model.annexes.AnnexOne;
+import com.github.kairocesar.simuladorsimplesnacional.model.annexes.*;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -14,34 +13,38 @@ import java.util.Objects;
 @Service
 public class AnnexService {
 
-    private final List<Annex> annexes = List.of(new AnnexOne());
-    private double valueGuide;
+    private final List<Annex> annexes = List.of(new AnnexOne(), new AnnexTwo(), new AnnexThree(), new AnnexFour(), new AnnexFive());
     private double valueAliquotEffective;
     private AnnexRequestDto annexRequestDto;
     Map<String, Double> taxes = new LinkedHashMap<>();
 
-    public AnnexResponseDto getTotalValues(AnnexRequestDto annexRequestDto){
+    public AnnexResponseDto getTotalValues(AnnexRequestDto annexRequestDto) {
         this.annexRequestDto = annexRequestDto;
-        return new AnnexResponseDto(calculateTaxes(), valueGuide,
-                valueAliquotEffective).formatResult();
+        AnnexResponseDto annexResponseDto = new AnnexResponseDto(calculateTaxes(), valueAliquotEffective);
+        return annexResponseDto.formater();
     }
 
     public Map<String, Double> calculateTaxes() {
-        Annex annex = annexes.get(annexRequestDto.annexOption() - 1);
+        Annex annex = getAnnex();
         double rbt12 = annexRequestDto.rbt12();
+        double sumAliquot = 0;
 
         for (Map.Entry<String, Double[]> tax : annex.getTaxDistribution().entrySet()) {
             double aliquotTax = annex.getAliquot(annex.getRange(rbt12))
-                    * tax.getValue()[annex.getRange(rbt12)];
+                    * tax.getValue()[annex.getRange(rbt12) - 1];
             double taxValue = annexRequestDto.salesValue() * aliquotTax;
             taxes.put(tax.getKey(), taxValue);
-            valueGuide += taxValue;
-            valueAliquotEffective += (aliquotTax * 100);
+            sumAliquot += (aliquotTax * 100);
         }
         if (!Objects.isNull(annexRequestDto.taxesReplaced())) {
             calculateTaxWithReplacement();
         }
+        valueAliquotEffective = sumAliquot;
         return taxes;
+    }
+
+    private Annex getAnnex() {
+        return annexes.get(annexRequestDto.annexOption() - 1);
     }
 
     private void calculateTaxWithReplacement() {
@@ -58,10 +61,11 @@ public class AnnexService {
     }
 
     private void removeValueOfTax(double salesValue, String tax) {
-        double aliquotTax = taxes.get(tax) / salesValue;
+        Annex annex = getAnnex();
+        int range = annex.getRange(annexRequestDto.rbt12());
+        double aliquotTax = annex.getAliquot(range) * annex.getTaxDistribution().get(tax)[range - 1];
         double valueTaxToPay = taxes.get(tax);
         double valueTaxToPut = valueTaxToPay - (salesValue * aliquotTax);
         taxes.put(tax, valueTaxToPut);
     }
-
 }
