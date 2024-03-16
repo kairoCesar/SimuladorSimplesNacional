@@ -27,9 +27,13 @@ public class AnnexTwo implements Annex {
         taxes.put("PIS", new Double[]{0.0249, 0.0249, 0.0249, 0.0249, 0.0249, 0.0454});
         taxes.put("COFINS", new Double[]{0.1151, 0.1151, 0.1151, 0.1151, 0.1151, 0.2096});
         taxes.put("ICMS", new Double[]{0.32, 0.32, 0.32, 0.32, 0.32, 0.32});
-        taxes.put("IPI", new Double[]{0.0750, 0.0750, 0.0750, 0.0750, 0.0750, 0.35});
+        taxes.put("IPI", new Double[]{0.0750, 0.0750, 0.0750, 0.0750, 0.0750, 0.00});
         return taxes;
     }
 
-    ;
+    @Override
+    public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5() {
+        return null;
+    }
+
 }

@@ -2,26 +2,24 @@ package com.github.kairocesar.simuladorsimplesnacional.controller;
 
 import com.github.kairocesar.simuladorsimplesnacional.controller.dto.AnnexRequestDto;
 import com.github.kairocesar.simuladorsimplesnacional.controller.dto.AnnexResponseDto;
-import com.github.kairocesar.simuladorsimplesnacional.service.AnnexService;
+import com.github.kairocesar.simuladorsimplesnacional.service.CalculatorService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/annex")
 public class AnnexController {
 
-    AnnexService annexService;
+    CalculatorService calculatorService;
 
-    public AnnexController(AnnexService annexService) {
-        this.annexService = annexService;
+    public AnnexController(CalculatorService calculatorService) {
+        this.calculatorService = calculatorService;
     }
 
     @PostMapping("/get_values")
     public AnnexResponseDto getValues(@RequestBody AnnexRequestDto annexRequestDto) {
-        return annexService.getTotalValues(annexRequestDto);
+        return calculatorService.getTotalValues(annexRequestDto);
     }
 }

@@ -8,43 +8,40 @@ import java.util.Map;
 public class AnnexResponseDto {
 
     private Map<String, Double> taxes;
-    double valueAliquotEffective;
-    private Map<String, String> taxesToResponse;
+    private Map<String, String> dataToResponse;
+    private double effectiveAliquot;
+    private double salesValue;
 
 
-    public AnnexResponseDto(Map<String, Double> taxes, double valueAliquotEffective) {
+    public AnnexResponseDto(Map<String, Double> taxes, double effectiveAliquot, double salesValue) {
         this.taxes = taxes;
-        this.valueAliquotEffective = valueAliquotEffective;
+        this.effectiveAliquot = effectiveAliquot;
+        this.salesValue = salesValue;
     }
 
     public AnnexResponseDto(Map<String, String> taxesToResponse) {
-        this.taxesToResponse = taxesToResponse;
+        this.dataToResponse = taxesToResponse;
     }
 
 
-    public AnnexResponseDto formater() {
-        double valueGuide = 0;
-
-        taxesToResponse = new LinkedHashMap<>();
-        NumberFormat numberFormat = new DecimalFormat("#,##0.00");
+    public AnnexResponseDto formatResponse() {
+        double totalValueOfTaxes = 0;
+        dataToResponse = new LinkedHashMap<>();
+        NumberFormat currencyFormat = new DecimalFormat("#,##0.00");
 
         for (Map.Entry<String, Double> taxToFormat : taxes.entrySet()) {
-            valueGuide += taxToFormat.getValue();
-            taxesToResponse.put(taxToFormat.getKey(), numberFormat.format(taxToFormat.getValue()));
+            totalValueOfTaxes += taxToFormat.getValue();
+            dataToResponse.put(taxToFormat.getKey(), currencyFormat.format(taxToFormat.getValue()));
         }
 
-        taxesToResponse.put("Valor da guia: ", numberFormat.format(valueGuide));
-        taxesToResponse.put("Porcentagem aliquota: ", numberFormat.format(valueAliquotEffective));
+        dataToResponse.put("Valor da guia: ", currencyFormat.format(totalValueOfTaxes));
+        dataToResponse.put("Alíquota efetiva: ", String.format("%.3f ",  effectiveAliquot * 100));
+        dataToResponse.put("Alíquota líquida: ", String.format("%.3f ", (totalValueOfTaxes / salesValue) * 100));
 
-        return new AnnexResponseDto(taxesToResponse);
-    }
-    
-
-    public Map<String, String> getTaxesToResponse() {
-        return taxesToResponse;
+        return new AnnexResponseDto(dataToResponse);
     }
 
-    public void setTaxesToResponse(Map<String, String> taxesToResponse) {
-        this.taxesToResponse = taxesToResponse;
+    public Map<String, String> getDataToResponse() {
+        return dataToResponse;
     }
 }

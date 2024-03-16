@@ -25,9 +25,18 @@ public class AnnexFour implements Annex {
         taxes.put("IRPJ", new Double[]{0.1880, 0.1980, 0.2080, 0.1780, 0.1880, 0.5350});
         taxes.put("PIS", new Double[]{0.0383, 0.0445, 0.0427, 0.0410, 0.0392, 0.0445});
         taxes.put("COFINS", new Double[]{0.1767, 0.2055, 0.1973, 0.1890, 0.1808, 0.2055});
-        taxes.put("ISS", new Double[]{0.4450, 0.40, 0.40, 0.40, 0.40, 0.40});
+        taxes.put("ISS", new Double[]{0.4450, 0.40, 0.40, 0.40, 0.40, 0.00});
         return taxes;
     }
 
-    ;
+
+    public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5() {
+        Map<String, Double> taxesAliquotsRange5IfIssAliquotIsGreaterThan5 = new LinkedHashMap<>();
+        taxesAliquotsRange5IfIssAliquotIsGreaterThan5.put("CSLL", 0.32);
+        taxesAliquotsRange5IfIssAliquotIsGreaterThan5.put("IRPJ", 0.3133);
+        taxesAliquotsRange5IfIssAliquotIsGreaterThan5.put("PIS", 0.0654);
+        taxesAliquotsRange5IfIssAliquotIsGreaterThan5.put("COFINS", 0.3013);
+        return taxesAliquotsRange5IfIssAliquotIsGreaterThan5;
+    }
+
 }
