@@ -2,6 +2,7 @@ package com.github.kairocesar.simuladorsimplesnacional.model.annexes;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AnnexOne implements Annex {
 
@@ -20,13 +21,14 @@ public class AnnexOne implements Annex {
     }
 
     @Override
-    public Map<String, Double[]> getTaxDistribution() {
+    public Map<String, Double[]> getTaxDistribution(boolean isSalesToExterior) {
         taxes.put("CPP", new Double[]{0.4150, 0.4150, 0.42, 0.42, 0.42, 0.4210});
         taxes.put("CSLL", new Double[]{0.0350, 0.0350, 0.0350, 0.0350, 0.0350, 0.10});
         taxes.put("IRPJ", new Double[]{0.0550, 0.0550, 0.0550, 0.0550, 0.0550, 0.1350});
         taxes.put("PIS", new Double[]{0.0276, 0.0276, 0.0276, 0.0276, 0.0276, 0.0613});
         taxes.put("COFINS", new Double[]{0.1274, 0.1274, 0.1274, 0.1274, 0.1274, 0.2827});
         taxes.put("ICMS", new Double[]{0.34, 0.34, 0.3350, 0.3350, 0.3350, 0.00});
+        checkSalesToExteriorAndRemoveTaxesPisCofinsIcms(taxes, isSalesToExterior);
         return taxes;
     }
 
@@ -34,5 +36,6 @@ public class AnnexOne implements Annex {
     public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5() {
         return null;
     }
+
 
 }

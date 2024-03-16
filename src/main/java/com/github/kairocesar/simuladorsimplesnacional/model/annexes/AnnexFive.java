@@ -20,13 +20,14 @@ public class AnnexFive implements Annex {
     }
 
     @Override
-    public Map<String, Double[]> getTaxDistribution() {
+    public Map<String, Double[]> getTaxDistribution(boolean isSalesToExterior) {
         taxes.put("CPP", new Double[]{0.2885, 0.2785, 0.2385, 0.2385, 0.2385, 0.2950});
         taxes.put("CSLL", new Double[]{0.15, 0.15, 0.15, 0.15, 0.1250, 0.1550});
         taxes.put("IRPJ", new Double[]{0.25, 0.23, 0.24, 0.21, 0.23, 0.35});
         taxes.put("PIS", new Double[]{0.0305, 0.0305, 0.0323, 0.0341, 0.0305, 0.0356});
         taxes.put("COFINS", new Double[]{0.1410, 0.1410, 0.1492, 0.1574, 0.1410, 0.1644});
         taxes.put("ISS", new Double[]{0.14, 0.17, 0.19, 0.21, 0.2350, 0.00});
+        checkSalesToExteriorAndRemoveTaxesPisCofinsIss(taxes, isSalesToExterior);
         return taxes;
     }
 
