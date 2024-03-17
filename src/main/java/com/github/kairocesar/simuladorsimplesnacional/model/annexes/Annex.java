@@ -32,9 +32,9 @@ public interface Annex {
 
     default void checkSalesToExteriorAndRemoveTaxesPisCofinsIss(Map<String, Double[]> taxes, boolean isSalesToExterior){
         if (isSalesToExterior) {
-            taxes.put("PIS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
-            taxes.put("COFINS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
-            taxes.put("ISS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+                taxes.put("PIS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+                taxes.put("COFINS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+                taxes.put("ISS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
         }
     }
 
@@ -43,7 +43,9 @@ public interface Annex {
             taxes.put("PIS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
             taxes.put("COFINS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
             taxes.put("ICMS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
-            taxes.put("IPI", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+            if (this instanceof AnnexTwo) {
+                taxes.put("IPI", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+            }
         }
     }
 }

@@ -38,12 +38,10 @@ public class AnnexService {
             taxes.put(tax.getKey(), taxValue);
         }
 
-        test();
+        calculateIcmsInCommunicationAndTransportService();
 
         if (getAnnex().checkAliquotAnnexThreeAndAnnexFour(effectiveAliquot))
             calculateTaxesIfIssAliquotIsGreaterThan5();
-
-        System.out.println(taxDistribution);
 
         if (!Objects.isNull(annexRequestDto.taxesReplaced()))
             distributeReplacedTaxes();
@@ -51,15 +49,29 @@ public class AnnexService {
         return taxes;
     }
 
-    public void test(){
+    public void calculateIcmsInCommunicationAndTransportService(){
         Annex annex = new AnnexOne();
         double rbt12 = annexRequestDto.rbt12();
         if(getAnnex() instanceof CommunicationAndTransportService){
-            double aliquotTax = annex.getTaxDistribution(false).get("ICMS")[getAnnex().getRange(rbt12) - 1] *
+            double aliquotTax = annex.getTaxDistribution(annexRequestDto.isSalesToExterior()).get("ICMS")[getAnnex().getRange(rbt12) - 1] *
                     getEffectiveAliquot(annex);
-            double taxValue = annexRequestDto.salesValue() * aliquotTax;
+            double taxValue = annexRequestDto.getSalesValue() * aliquotTax;
             taxes.put("ICMS", taxValue);
         }
+    }
+
+    public void calculateTaxesIfIssAliquotIsGreaterThan5() {
+        Map<String, Double[]> taxDistribution = getAnnex().getTaxDistribution(annexRequestDto.isSalesToExterior());
+        double effectiveAliquot = getEffectiveAliquot(getAnnex());
+        Map<String, Double> valuesDistributionLcp123 = getAnnex().getTaxDistributionIfTaxIsGreaterThan5();
+        taxDistribution.remove("ISS");
+        double effectiveAliquotWithoutIss = effectiveAliquot - MAXIMUM_ISS_ALIQUOT;
+        for (Map.Entry<String, Double[]> tax : taxDistribution.entrySet()) {
+            double newTaxAliquot = effectiveAliquotWithoutIss * valuesDistributionLcp123.get(tax.getKey());
+            double newTaxValue = newTaxAliquot * annexRequestDto.salesValue();
+            taxes.put(tax.getKey(), newTaxValue);
+        }
+        taxes.put("ISS", (annexRequestDto.salesValue()) * MAXIMUM_ISS_ALIQUOT);
     }
 
     private void distributeReplacedTaxes() {
@@ -102,19 +114,5 @@ public class AnnexService {
         double deductionValue = annex.getDeductionValue(annex.getRange(annexRequestDto.rbt12()));
         return (((annexRequestDto.rbt12() * annex.getAliquot(annex.getRange(annexRequestDto.rbt12())) -
                 deductionValue)) / annexRequestDto.rbt12());
-    }
-
-    public void calculateTaxesIfIssAliquotIsGreaterThan5() {
-        Map<String, Double[]> taxDistribution = getAnnex().getTaxDistribution(annexRequestDto.isSalesToExterior());
-        double effectiveAliquot = getEffectiveAliquot(getAnnex());
-        Map<String, Double> valuesDistributionLcp123 = getAnnex().getTaxDistributionIfTaxIsGreaterThan5();
-        taxDistribution.remove("ISS");
-        double effectiveAliquotWithoutIss = effectiveAliquot - MAXIMUM_ISS_ALIQUOT;
-        for (Map.Entry<String, Double[]> tax : taxDistribution.entrySet()) {
-            double newTaxAliquot = effectiveAliquotWithoutIss * valuesDistributionLcp123.get(tax.getKey());
-            double newTaxValue = newTaxAliquot * annexRequestDto.salesValue();
-            taxes.put(tax.getKey(), newTaxValue);
-        }
-        taxes.put("ISS", (annexRequestDto.salesValue()) * MAXIMUM_ISS_ALIQUOT);
     }
 }

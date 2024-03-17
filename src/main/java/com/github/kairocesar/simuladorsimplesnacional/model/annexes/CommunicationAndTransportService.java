@@ -23,6 +23,7 @@ public class CommunicationAndTransportService implements Annex{
         Map<String, Double[]> taxDistribution = annexThree.getTaxDistribution(isSalesToExterior);
         taxDistribution.remove("ISS");
         taxDistribution.put("ICMS", new Double[]{0.34, 0.34, 0.3350, 0.3350, 0.3350, 0.00});
+        checkSalesToExteriorAndRemoveTaxesPisCofinsIcms(taxDistribution, isSalesToExterior);
         return taxDistribution;
     }
 
