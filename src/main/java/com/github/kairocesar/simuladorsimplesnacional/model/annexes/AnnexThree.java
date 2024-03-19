@@ -32,6 +32,7 @@ public class AnnexThree implements Annex {
         return taxes;
     }
 
+    @Override
     public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5() {
         Map<String, Double> taxesAliquotsRange5IfIssAliquotIsGreaterThan5 = new LinkedHashMap<>();
         taxesAliquotsRange5IfIssAliquotIsGreaterThan5.put("CPP", 0.6526);

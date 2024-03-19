@@ -11,13 +11,14 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class AnnexService {
+public class AnnexCalculatorService {
 
-    public static final double MAXIMUM_ISS_ALIQUOT = 0.05;
+    private static final double MAXIMUM_ISS_ALIQUOT = 0.05;
     private final List<Annex> annexes = List.of(new AnnexOne(), new AnnexTwo(), new AnnexThree(), new AnnexFour(), new AnnexFive(),
-            new CommunicationAndTransportService());
+            new CommunicationAndTransport(), new LeasingOfMovableProperty());
     private AnnexRequestDto annexRequestDto;
     Map<String, Double> taxes = new LinkedHashMap<>();
+
 
     public AnnexResponseDto getTotalValues(AnnexRequestDto annexRequestDto) {
         this.annexRequestDto = annexRequestDto;
@@ -52,7 +53,7 @@ public class AnnexService {
     public void calculateIcmsInCommunicationAndTransportService(){
         Annex annex = new AnnexOne();
         double rbt12 = annexRequestDto.rbt12();
-        if(getAnnex() instanceof CommunicationAndTransportService){
+        if(getAnnex() instanceof CommunicationAndTransport){
             double aliquotTax = annex.getTaxDistribution(annexRequestDto.isSalesToExterior()).get("ICMS")[getAnnex().getRange(rbt12) - 1] *
                     getEffectiveAliquot(annex);
             double taxValue = annexRequestDto.getSalesValue() * aliquotTax;
@@ -74,6 +75,7 @@ public class AnnexService {
         taxes.put("ISS", (annexRequestDto.salesValue()) * MAXIMUM_ISS_ALIQUOT);
     }
 
+
     private void distributeReplacedTaxes() {
         for (String tax : annexRequestDto.taxesReplaced()) {
             if (!Objects.isNull(tax) && tax.equalsIgnoreCase("PIS COFINS")) {
@@ -92,7 +94,7 @@ public class AnnexService {
         Annex annex = getAnnex();
         int range = annex.getRange(annexRequestDto.rbt12());
         double aliquotTax = taxDistribution.get(tax)[range - 1] * getEffectiveAliquot(annex);
-        if (getAnnex() instanceof CommunicationAndTransportService){
+        if (getAnnex() instanceof CommunicationAndTransport){
             aliquotTax = taxDistribution.get("ICMS")[range - 1] *
                     getEffectiveAliquot(new AnnexOne());
         }

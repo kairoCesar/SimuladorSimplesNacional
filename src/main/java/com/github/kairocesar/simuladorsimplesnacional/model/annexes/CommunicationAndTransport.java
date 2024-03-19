@@ -2,7 +2,7 @@ package com.github.kairocesar.simuladorsimplesnacional.model.annexes;
 
 import java.util.Map;
 
-public class CommunicationAndTransportService implements Annex{
+public class CommunicationAndTransport implements Annex{
 
     private AnnexThree annexThree = new AnnexThree();
 
@@ -31,6 +31,7 @@ public class CommunicationAndTransportService implements Annex{
     public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5() {
         return null;
     }
+
 
     public AnnexThree getAnnexThree() {
         return annexThree;

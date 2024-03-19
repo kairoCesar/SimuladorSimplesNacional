@@ -2,8 +2,8 @@ package com.github.kairocesar.simuladorsimplesnacional.model.annexes;
 
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Component
 public interface Annex {
@@ -14,7 +14,7 @@ public interface Annex {
 
     Map<String, Double[]> getTaxDistribution(boolean isSalesToExterior);
 
-    Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5();
+    public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5();
 
     default int getRange(double rbt12) {
         if (rbt12 <= 180000.00) return 1;
