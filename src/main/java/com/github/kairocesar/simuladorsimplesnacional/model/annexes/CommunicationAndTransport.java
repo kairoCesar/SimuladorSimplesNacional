@@ -27,12 +27,6 @@ public class CommunicationAndTransport implements Annex{
         return taxDistribution;
     }
 
-    @Override
-    public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5() {
-        return null;
-    }
-
-
     public AnnexThree getAnnexThree() {
         return annexThree;
     }

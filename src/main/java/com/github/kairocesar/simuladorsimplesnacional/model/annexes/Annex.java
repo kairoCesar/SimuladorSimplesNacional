@@ -13,8 +13,6 @@ public interface Annex {
 
     Map<String, Double[]> getTaxDistribution(boolean isSalesToExterior);
 
-    Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5();
-
     default int getRange(double rbt12) {
         if (rbt12 <= 180000.00) return 1;
         if (rbt12 <= 360000.00) return 2;

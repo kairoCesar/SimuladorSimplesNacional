@@ -64,9 +64,13 @@ public class AnnexCalculatorService {
     }
 
     public void calculateTaxesIfIssAliquotIsGreaterThan5() {
+        AnnexAbstract annexAbstract = new AnnexThree();
         Map<String, Double[]> taxDistribution = getAnnex().getTaxDistribution(annexRequestDto.isSalesToExterior());
         double effectiveAliquot = getEffectiveAliquot(getAnnex());
-        Map<String, Double> valuesDistributionLcp123 = getAnnex().getTaxDistributionIfTaxIsGreaterThan5();
+        if (getAnnex() instanceof AnnexFour) {
+            annexAbstract = new AnnexFour();
+        }
+        Map<String, Double> valuesDistributionLcp123 = annexAbstract.getTaxDistributionIfTaxIsGreaterThan5();
         taxDistribution.remove("ISS");
         double effectiveAliquotWithoutIss = effectiveAliquot - MAXIMUM_ISS_ALIQUOT;
         for (Map.Entry<String, Double[]> tax : taxDistribution.entrySet()) {

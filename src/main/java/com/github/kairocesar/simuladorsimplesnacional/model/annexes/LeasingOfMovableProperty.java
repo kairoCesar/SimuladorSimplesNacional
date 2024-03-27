@@ -23,10 +23,4 @@ public class LeasingOfMovableProperty implements Annex {
         taxes.put("ISS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
         return taxes;
     }
-
-    @Override
-    public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5() {
-        return null;
-    }
-
 }

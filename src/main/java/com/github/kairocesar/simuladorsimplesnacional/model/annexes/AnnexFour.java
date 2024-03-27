@@ -3,7 +3,7 @@ package com.github.kairocesar.simuladorsimplesnacional.model.annexes;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class AnnexFour implements Annex {
+public class AnnexFour extends AnnexAbstract implements Annex {
 
     private final Map<String, Double[]> taxes = new LinkedHashMap<>();
 

@@ -32,9 +32,4 @@ public class AnnexTwo implements Annex {
         return taxes;
     }
 
-    @Override
-    public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5() {
-        return null;
-    }
-
 }

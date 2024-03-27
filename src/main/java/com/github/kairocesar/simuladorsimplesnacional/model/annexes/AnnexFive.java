@@ -30,9 +30,4 @@ public class AnnexFive implements Annex {
         checkSalesToExteriorAndRemoveTaxesPisCofinsIss(taxes, isSalesToExterior);
         return taxes;
     }
-
-    @Override
-    public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5() {
-        return null;
-    }
 }

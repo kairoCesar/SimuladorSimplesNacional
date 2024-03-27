@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class AnnexThree implements Annex {
+public class AnnexThree extends AnnexAbstract implements Annex {
 
     private final Map<String, Double[]> taxes = new LinkedHashMap<>();
 
