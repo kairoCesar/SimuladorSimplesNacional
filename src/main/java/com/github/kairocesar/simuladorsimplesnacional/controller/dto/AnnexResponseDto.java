@@ -1,5 +1,7 @@
 package com.github.kairocesar.simuladorsimplesnacional.controller.dto;
 
+import com.github.kairocesar.simuladorsimplesnacional.model.date.AnnexDate;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedHashMap;
@@ -9,6 +11,7 @@ public class AnnexResponseDto {
 
     private double effectiveAliquot;
     private double salesValue;
+    private AnnexDate annexDate;
     private Map<String, Double> taxesFromService;
     private Map<String, String[]> taxesInfoToResponse = new LinkedHashMap<>();
     private Map<String, String> totalValues = new LinkedHashMap<>();
@@ -21,33 +24,32 @@ public class AnnexResponseDto {
         this.salesValue = salesValue;
     }
 
-    public AnnexResponseDto(Map<String, String[]> taxesInfoToResponse, Map<String, String > totalValues) {
+    public AnnexResponseDto(Map<String, String[]> taxesInfoToResponse, Map<String, String> totalValues, AnnexDate date) {
         this.taxesInfoToResponse = taxesInfoToResponse;
         this.totalValues = totalValues;
+        this.annexDate = date;
     }
 
-    public AnnexResponseDto formatResponse() {
+    public AnnexResponseDto formatResponse(AnnexDate date) {
         formatTaxesInfo();
-        return new AnnexResponseDto(taxesInfoToResponse, totalValues);
+        return new AnnexResponseDto(taxesInfoToResponse, totalValues, date);
     }
-
 
     private void formatTaxesInfo() {
         double totalValueOfTaxes = 0;
         for (Map.Entry<String, Double> taxToFormat : taxesFromService.entrySet()) {
             totalValueOfTaxes += taxToFormat.getValue();
             double taxValue = taxToFormat.getValue();
-            String taxAliquot = String.format("%.4f ",  (taxValue / salesValue) * 100);
-            taxesInfoToResponse.put(taxToFormat.getKey(), new String[]{currencyFormat.format(taxValue), taxAliquot});
+            String taxAliquot = String.format("%.4f %%", (taxValue / salesValue) * 100);
+            taxesInfoToResponse.put(taxToFormat.getKey(), new String[]{String.format("R$ %s", currencyFormat.format(taxValue)), taxAliquot});
         }
         putAndFormatTotalValues(totalValueOfTaxes);
-
     }
 
     private void putAndFormatTotalValues(double totalValueOfTaxes) {
-        totalValues.put("Valor da guia: ", currencyFormat.format(totalValueOfTaxes));
-        totalValues.put("Alíquota efetiva: ", String.format("%.4f ",  effectiveAliquot * 100));
-        totalValues.put("Alíquota líquida: ", String.format("%.4f ", (totalValueOfTaxes / salesValue) * 100));
+        totalValues.put("Valor da guia: ", String.format("R$ %s", currencyFormat.format(totalValueOfTaxes)));
+        totalValues.put("Alíquota efetiva: ", String.format("%.4f %%", effectiveAliquot * 100));
+        totalValues.put("Alíquota líquida: ", String.format("%.4f %%", (totalValueOfTaxes / salesValue) * 100));
     }
 
     public Map<String, String[]> getTaxesInfoToResponse() {
@@ -57,4 +59,9 @@ public class AnnexResponseDto {
     public Map<String, String> getTotalValues() {
         return totalValues;
     }
+
+    public AnnexDate getAnnexDate() {
+        return annexDate;
+    }
+
 }

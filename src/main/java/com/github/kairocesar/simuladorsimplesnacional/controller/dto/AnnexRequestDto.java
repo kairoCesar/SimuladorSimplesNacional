@@ -2,6 +2,8 @@ package com.github.kairocesar.simuladorsimplesnacional.controller.dto;
 
 import com.github.kairocesar.simuladorsimplesnacional.exceptions.InvalidArgumentException;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -18,6 +20,11 @@ public record AnnexRequestDto(int annexOption, double rbt12, Double salesValue, 
 
     public boolean isSalesToExterior() {
         return !Objects.isNull(salesValueToExterior);
+    }
+
+    public String dateOfConsulted() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return localDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
     }
 
 //    public void checkForExceptions() {

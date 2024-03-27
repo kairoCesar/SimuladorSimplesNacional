@@ -2,7 +2,6 @@ package com.github.kairocesar.simuladorsimplesnacional.model.annexes;
 
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
@@ -14,7 +13,7 @@ public interface Annex {
 
     Map<String, Double[]> getTaxDistribution(boolean isSalesToExterior);
 
-    public Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5();
+    Map<String, Double> getTaxDistributionIfTaxIsGreaterThan5();
 
     default int getRange(double rbt12) {
         if (rbt12 <= 180000.00) return 1;
@@ -30,15 +29,15 @@ public interface Annex {
                 this instanceof AnnexFour && (effectiveAliquot * 100) > 12.5;
     }
 
-    default void checkSalesToExteriorAndRemoveTaxesPisCofinsIss(Map<String, Double[]> taxes, boolean isSalesToExterior){
+    default void checkSalesToExteriorAndRemoveTaxesPisCofinsIss(Map<String, Double[]> taxes, boolean isSalesToExterior) {
         if (isSalesToExterior) {
-                taxes.put("PIS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
-                taxes.put("COFINS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
-                taxes.put("ISS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+            taxes.put("PIS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+            taxes.put("COFINS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+            taxes.put("ISS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
         }
     }
 
-    default void checkSalesToExteriorAndRemoveTaxesPisCofinsIcms(Map<String, Double[]> taxes, boolean isSalesToExterior) {
+    default void checkSalesToExteriorAndRemoveTaxesPisCofinsIcmsIpi(Map<String, Double[]> taxes, boolean isSalesToExterior) {
         if (isSalesToExterior) {
             taxes.put("PIS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
             taxes.put("COFINS", new Double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0});

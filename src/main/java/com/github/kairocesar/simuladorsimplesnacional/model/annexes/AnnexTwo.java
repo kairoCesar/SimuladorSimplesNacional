@@ -2,7 +2,6 @@ package com.github.kairocesar.simuladorsimplesnacional.model.annexes;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class AnnexTwo implements Annex {
 
@@ -29,7 +28,7 @@ public class AnnexTwo implements Annex {
         taxes.put("COFINS", new Double[]{0.1151, 0.1151, 0.1151, 0.1151, 0.1151, 0.2096});
         taxes.put("ICMS", new Double[]{0.32, 0.32, 0.32, 0.32, 0.32, 0.32});
         taxes.put("IPI", new Double[]{0.0750, 0.0750, 0.0750, 0.0750, 0.0750, 0.00});
-        checkSalesToExteriorAndRemoveTaxesPisCofinsIcms(taxes, salesToExterior);
+        checkSalesToExteriorAndRemoveTaxesPisCofinsIcmsIpi(taxes, salesToExterior);
         return taxes;
     }
 
