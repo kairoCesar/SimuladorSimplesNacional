@@ -1,7 +1,5 @@
 package com.github.kairocesar.simuladorsimplesnacional.controller.dto;
 
-import com.github.kairocesar.simuladorsimplesnacional.model.date.AnnexDate;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedHashMap;
@@ -11,7 +9,6 @@ public class AnnexResponseDto {
 
     private double effectiveAliquot;
     private double salesValue;
-    private AnnexDate annexDate;
     private Map<String, Double> taxesFromService;
     private Map<String, String[]> taxesInfoToResponse = new LinkedHashMap<>();
     private Map<String, String> totalValues = new LinkedHashMap<>();
@@ -24,15 +21,14 @@ public class AnnexResponseDto {
         this.salesValue = salesValue;
     }
 
-    public AnnexResponseDto(Map<String, String[]> taxesInfoToResponse, Map<String, String> totalValues, AnnexDate date) {
+    public AnnexResponseDto(Map<String, String[]> taxesInfoToResponse, Map<String, String> totalValues) {
         this.taxesInfoToResponse = taxesInfoToResponse;
         this.totalValues = totalValues;
-        this.annexDate = date;
     }
 
-    public AnnexResponseDto formatResponse(AnnexDate date) {
+    public AnnexResponseDto formatResponse() {
         formatTaxesInfo();
-        return new AnnexResponseDto(taxesInfoToResponse, totalValues, date);
+        return new AnnexResponseDto(taxesInfoToResponse, totalValues);
     }
 
     private void formatTaxesInfo() {
@@ -60,8 +56,5 @@ public class AnnexResponseDto {
         return totalValues;
     }
 
-    public AnnexDate getAnnexDate() {
-        return annexDate;
-    }
 
 }

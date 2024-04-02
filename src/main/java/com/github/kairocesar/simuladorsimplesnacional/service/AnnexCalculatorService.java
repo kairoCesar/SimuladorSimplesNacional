@@ -3,7 +3,6 @@ package com.github.kairocesar.simuladorsimplesnacional.service;
 import com.github.kairocesar.simuladorsimplesnacional.controller.dto.AnnexRequestDto;
 import com.github.kairocesar.simuladorsimplesnacional.controller.dto.AnnexResponseDto;
 import com.github.kairocesar.simuladorsimplesnacional.model.annexes.*;
-import com.github.kairocesar.simuladorsimplesnacional.model.date.AnnexDate;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -21,13 +20,12 @@ public class AnnexCalculatorService {
     Map<String, Double> taxes = new LinkedHashMap<>();
 
 
-    public AnnexResponseDto getTotalValues(AnnexRequestDto annexRequestDto, DataService dataService) {
+    public AnnexResponseDto getTotalValues(AnnexRequestDto annexRequestDto) {
         this.annexRequestDto = annexRequestDto;
         taxes.clear();
         AnnexResponseDto annexResponseDto = new AnnexResponseDto(calculateTaxes(),
                 getEffectiveAliquot(getAnnex()), annexRequestDto.getSalesValue());
-        AnnexDate annexDate = dataService.save(annexRequestDto.rbt12(), annexRequestDto.salesValue(), annexRequestDto.dateOfConsulted());
-        return annexResponseDto.formatResponse(annexDate);
+        return annexResponseDto.formatResponse();
     }
 
     public Map<String, Double> calculateTaxes() {
@@ -43,7 +41,7 @@ public class AnnexCalculatorService {
 
         calculateIcmsInCommunicationAndTransportService();
 
-        if (getAnnex().checkAliquotAnnexThreeAndAnnexFour(effectiveAliquot))
+        if (getAnnex().checkAliquotAnnexThreeAndAnnexFour(effectiveAliquot) && !annexRequestDto.isSalesToExterior())
             calculateTaxesIfIssAliquotIsGreaterThan5();
 
         if (!Objects.isNull(annexRequestDto.taxesReplaced()))
@@ -53,9 +51,9 @@ public class AnnexCalculatorService {
     }
 
     public void calculateIcmsInCommunicationAndTransportService() {
-        Annex annex = new AnnexOne();
-        double rbt12 = annexRequestDto.rbt12();
         if (getAnnex() instanceof CommunicationAndTransport) {
+            Annex annex = new AnnexOne();
+            double rbt12 = annexRequestDto.rbt12();
             double aliquotTax = annex.getTaxDistribution(annexRequestDto.isSalesToExterior()).get("ICMS")[getAnnex().getRange(rbt12) - 1] *
                     getEffectiveAliquot(annex);
             double taxValue = annexRequestDto.getSalesValue() * aliquotTax;

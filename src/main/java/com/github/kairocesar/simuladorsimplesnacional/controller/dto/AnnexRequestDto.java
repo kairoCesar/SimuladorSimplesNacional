@@ -22,10 +22,6 @@ public record AnnexRequestDto(int annexOption, double rbt12, Double salesValue, 
         return !Objects.isNull(salesValueToExterior);
     }
 
-    public String dateOfConsulted() {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        return localDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-    }
 
 //    public void checkForExceptions() {
 //

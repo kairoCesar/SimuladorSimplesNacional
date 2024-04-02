@@ -2,7 +2,6 @@ package com.github.kairocesar.simuladorsimplesnacional.model.annexes;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class AnnexThree extends AnnexAbstract implements Annex {
 
