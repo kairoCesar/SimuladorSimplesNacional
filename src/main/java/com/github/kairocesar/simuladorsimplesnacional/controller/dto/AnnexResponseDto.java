@@ -9,16 +9,18 @@ public class AnnexResponseDto {
 
     private double effectiveAliquot;
     private double salesValue;
+    private int range;
     private Map<String, Double> taxesFromService;
     private Map<String, String[]> taxesInfoToResponse = new LinkedHashMap<>();
     private Map<String, String> totalValues = new LinkedHashMap<>();
     private final NumberFormat currencyFormat = new DecimalFormat("#,##0.00");
 
 
-    public AnnexResponseDto(Map<String, Double> taxes, double effectiveAliquot, double salesValue) {
+    public AnnexResponseDto(Map<String, Double> taxes, double effectiveAliquot, double salesValue, int range) {
         this.taxesFromService = taxes;
         this.effectiveAliquot = effectiveAliquot;
         this.salesValue = salesValue;
+        this.range = range;
     }
 
     public AnnexResponseDto(Map<String, String[]> taxesInfoToResponse, Map<String, String> totalValues) {
@@ -43,6 +45,7 @@ public class AnnexResponseDto {
     }
 
     private void putAndFormatTotalValues(double totalValueOfTaxes) {
+        totalValues.put("Faixa: ", String.valueOf(range));
         totalValues.put("Valor da guia: ", String.format("R$ %s", currencyFormat.format(totalValueOfTaxes)));
         totalValues.put("Alíquota efetiva: ", String.format("%.4f %%", effectiveAliquot * 100));
         totalValues.put("Alíquota líquida: ", String.format("%.4f %%", (totalValueOfTaxes / salesValue) * 100));

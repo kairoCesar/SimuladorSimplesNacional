@@ -24,7 +24,7 @@ public class AnnexCalculatorService {
         this.annexRequestDto = annexRequestDto;
         taxes.clear();
         AnnexResponseDto annexResponseDto = new AnnexResponseDto(calculateTaxes(),
-                getEffectiveAliquot(getAnnex()), annexRequestDto.getSalesValue());
+                getEffectiveAliquot(getAnnex()), annexRequestDto.getSalesValue(), getAnnex().getRange(annexRequestDto.rbt12()));
         return annexResponseDto.formatResponse();
     }
 
@@ -41,7 +41,7 @@ public class AnnexCalculatorService {
 
         calculateIcmsInCommunicationAndTransportService();
 
-        if (getAnnex().checkAliquotAnnexThreeAndAnnexFour(effectiveAliquot) && !annexRequestDto.isSalesToExterior())
+        if (getAnnex().checkAliquotAnnexThreeAndAnnexFour(effectiveAliquot))
             calculateTaxesIfIssAliquotIsGreaterThan5();
 
         if (!Objects.isNull(annexRequestDto.taxesReplaced()))
@@ -63,6 +63,8 @@ public class AnnexCalculatorService {
 
     public void calculateTaxesIfIssAliquotIsGreaterThan5() {
         AnnexAbstract annexAbstract = new AnnexThree();
+        double validSalesValue = ((annexRequestDto.isSalesToExterior()) ? annexRequestDto.salesValueToExterior() :
+                annexRequestDto.salesValue());
         Map<String, Double[]> taxDistribution = getAnnex().getTaxDistribution(annexRequestDto.isSalesToExterior());
         double effectiveAliquot = getEffectiveAliquot(getAnnex());
         if (getAnnex() instanceof AnnexFour) {
@@ -73,10 +75,16 @@ public class AnnexCalculatorService {
         double effectiveAliquotWithoutIss = effectiveAliquot - MAXIMUM_ISS_ALIQUOT;
         for (Map.Entry<String, Double[]> tax : taxDistribution.entrySet()) {
             double newTaxAliquot = effectiveAliquotWithoutIss * valuesDistributionLcp123.get(tax.getKey());
-            double newTaxValue = newTaxAliquot * annexRequestDto.salesValue();
+            double newTaxValue = newTaxAliquot * validSalesValue;
             taxes.put(tax.getKey(), newTaxValue);
         }
-        taxes.put("ISS", (annexRequestDto.salesValue()) * MAXIMUM_ISS_ALIQUOT);
+        taxes.put("ISS", (validSalesValue * MAXIMUM_ISS_ALIQUOT));
+
+        if (annexRequestDto.isSalesToExterior()) {
+            taxes.put("ISS", 0.00);
+            taxes.put("PIS", 0.00);
+            taxes.put("COFINS", 0.00);
+        }
     }
 
 
