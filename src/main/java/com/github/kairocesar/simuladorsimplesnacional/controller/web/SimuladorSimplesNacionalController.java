@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.ParseException;
+
 
 @Controller
 @RequestMapping("/")
@@ -27,7 +29,7 @@ public class SimuladorSimplesNacionalController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ModelAndView calcular(AnnexRequestModel annexRequestModel, BindingResult result, RedirectAttributes attributes) {
+    public ModelAndView calcular(AnnexRequestModel annexRequestModel, BindingResult result, RedirectAttributes attributes) throws ParseException {
         if (result.hasErrors()) {
             return simuladorSimplesNacional(annexRequestModel);
         }
