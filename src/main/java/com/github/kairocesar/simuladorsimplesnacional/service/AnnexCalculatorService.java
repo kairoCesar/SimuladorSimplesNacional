@@ -29,7 +29,7 @@ public class AnnexCalculatorService {
 
     public Double convertToDouble(String value) throws ParseException {
         NumberFormat formatter = NumberFormat.getNumberInstance(new Locale("pt", "BR"));
-        Number numberRbt12 = formatter.parse(annexRequestDto.rbt12());
+        Number numberRbt12 = formatter.parse(value);
         return Double.parseDouble(numberRbt12.toString());
     }
 
