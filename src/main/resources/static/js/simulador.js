@@ -69,6 +69,17 @@
       salesValueToExteriorField.classList.remove('hidden');
       salesValueToExterior.classList.remove('hidden');
    }
+
+       // Define o valor como null se o campo estiver oculto
+       if (salesValue.classList.contains('hidden')) {
+           salesValue.value = null;
+       }
+
+           // Define o valor como null se o campo estiver oculto
+           if (salesValueToExterior.classList.contains('hidden')) {
+               salesValueToExterior.value = null;
+           }
+
 }
 
  document.addEventListener("DOMContentLoaded", function() {
@@ -81,7 +92,8 @@
         }
 
         //const rbt12Value = parseFloat(rbt12Field.value.replace(/\./g, '').replace(',', '.'));
-        const rbt12Value = parseFloat(rbt12Field.value);
+        const rbt12Value = unmaskMoney(rbt12Field.value);
+        console.log(rbt12Field.value);
         console.log(rbt12Value);
         if (rbt12Value > 3600000.00) {
             event.preventDefault(); // Impede o envio do formulário
@@ -127,4 +139,11 @@ function openErrorModal(field) {
   modalBody.appendChild(errorMessage);
 
   errorModal.show();
+}
+
+function unmaskMoney(value) {
+    const valorSemMascara = value.replace(/[^\d\-+\.]/g, '');
+
+      // Converte o valor sem máscara para double e retorna
+      return parseFloat(valorSemMascara);
 }

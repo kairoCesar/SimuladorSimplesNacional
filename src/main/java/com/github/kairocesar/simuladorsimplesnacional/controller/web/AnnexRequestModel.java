@@ -4,17 +4,17 @@ import java.util.Arrays;
 
 public class AnnexRequestModel {
     private Integer annexOption;
-    private Double rbt12;
-    private Double salesValue;
-    private Double salesValueToExterior;
+    private String rbt12;
+    private String salesValue;
+    private String salesValueToExterior;
     private String[] taxesReplaced;
-    private double valueIcmsReplacement;
-    private double valuePisCofinsReplacement;
-    private double valueIssReplacement;
+    private String valueIcmsReplacement;
+    private String valuePisCofinsReplacement;
+    private String valueIssReplacement;
 
     public AnnexRequestModel() {}
 
-    public AnnexRequestModel(Integer annexOption, Double rbt12, Double salesValue, Double salesValueToExterior, String[] taxesReplaced, double valueIcmsReplacement, double valuePisCofinsReplacement, double valueIssReplacement) {
+    public AnnexRequestModel(Integer annexOption, String rbt12, String salesValue, String salesValueToExterior, String[] taxesReplaced, String valueIcmsReplacement, String valuePisCofinsReplacement, String valueIssReplacement) {
         this.annexOption = annexOption;
         this.rbt12 = rbt12;
         this.salesValue = salesValue;
@@ -33,27 +33,27 @@ public class AnnexRequestModel {
         this.annexOption = annexOption;
     }
 
-    public Double getRbt12() {
+    public String getRbt12() {
         return rbt12;
     }
 
-    public void setRbt12(Double rbt12) {
+    public void setRbt12(String rbt12) {
         this.rbt12 = rbt12;
     }
 
-    public Double getSalesValue() {
+    public String getSalesValue() {
         return salesValue;
     }
 
-    public void setSalesValue(Double salesValue) {
+    public void setSalesValue(String salesValue) {
         this.salesValue = salesValue;
     }
 
-    public Double getSalesValueToExterior() {
+    public String getSalesValueToExterior() {
         return salesValueToExterior;
     }
 
-    public void setSalesValueToExterior(Double salesValueToExterior) {
+    public void setSalesValueToExterior(String salesValueToExterior) {
         this.salesValueToExterior = salesValueToExterior;
     }
 
@@ -65,28 +65,27 @@ public class AnnexRequestModel {
         this.taxesReplaced = taxesReplaced;
     }
 
-    public double getValueIcmsReplacement() {
+    public String getValueIcmsReplacement() {
         return valueIcmsReplacement;
     }
 
-    public void setValueIcmsReplacement(double valueIcmsReplacement) {
+    public void setValueIcmsReplacement(String valueIcmsReplacement) {
         this.valueIcmsReplacement = valueIcmsReplacement;
     }
 
-    public double getValuePisCofinsReplacement() {
+    public String getValuePisCofinsReplacement() {
         return valuePisCofinsReplacement;
     }
 
-    public void setValuePisCofinsReplacement(double valuePisCofinsReplacement) {
+    public void setValuePisCofinsReplacement(String valuePisCofinsReplacement) {
         this.valuePisCofinsReplacement = valuePisCofinsReplacement;
     }
 
-    public double getValueIssReplacement() {
+    public String getValueIssReplacement() {
         return valueIssReplacement;
     }
 
-    public void setValueIssReplacement(double valueIssReplacement) {
+    public void setValueIssReplacement(String valueIssReplacement) {
         this.valueIssReplacement = valueIssReplacement;
     }
-
 }
