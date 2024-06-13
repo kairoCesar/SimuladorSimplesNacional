@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class AnnexRequestModel {
     private Integer annexOption;
-    private double rbt12;
+    private Double rbt12;
     private Double salesValue;
     private Double salesValueToExterior;
     private String[] taxesReplaced;
@@ -14,7 +14,7 @@ public class AnnexRequestModel {
 
     public AnnexRequestModel() {}
 
-    public AnnexRequestModel(Integer annexOption, double rbt12, Double salesValue, Double salesValueToExterior, String[] taxesReplaced, double valueIcmsReplacement, double valuePisCofinsReplacement, double valueIssReplacement) {
+    public AnnexRequestModel(Integer annexOption, Double rbt12, Double salesValue, Double salesValueToExterior, String[] taxesReplaced, double valueIcmsReplacement, double valuePisCofinsReplacement, double valueIssReplacement) {
         this.annexOption = annexOption;
         this.rbt12 = rbt12;
         this.salesValue = salesValue;
@@ -33,11 +33,11 @@ public class AnnexRequestModel {
         this.annexOption = annexOption;
     }
 
-    public double getRbt12() {
+    public Double getRbt12() {
         return rbt12;
     }
 
-    public void setRbt12(double rbt12) {
+    public void setRbt12(Double rbt12) {
         this.rbt12 = rbt12;
     }
 

@@ -1,9 +1,14 @@
 
  $(function(){
-            $(".js-decimal").maskMoney({
-                thousands: '',
-                decimal: '.',
-                allowZero: true,
-                allowNegative: false
-            });
+            $(".js-decimal").maskMoney();
         });
+
+
+ /*
+ {
+                 thousands: '',
+                 decimal: '.',
+                 allowZero: true,
+                 allowNegative: false
+             }
+ */

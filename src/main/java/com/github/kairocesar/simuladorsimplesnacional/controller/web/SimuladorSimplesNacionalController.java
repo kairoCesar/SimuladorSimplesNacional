@@ -47,6 +47,7 @@ public class SimuladorSimplesNacionalController {
 
         ModelAndView mv = new ModelAndView("simples-nacional");
         mv.addObject("showTable", true);
+        mv.addObject("anexoCalculo", annexRequestModel.getAnnexOption());
         mv.addObject("annexResponseDto", response);
         mv.addObject("mensagem", "Calculado com sucesso.");
         mv.addObject("annexRequestModel", new AnnexRequestModel());
