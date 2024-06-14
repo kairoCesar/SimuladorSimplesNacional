@@ -1,14 +1,10 @@
 
  $(function(){
-            $(".js-decimal").maskMoney();
+            $(".js-decimal").maskMoney(
+            {
+                             thousands: '.',
+                             decimal: ',',
+                             allowZero: true,
+                             allowNegative: false
+                         });
         });
-
-
- /*
- {
-                 thousands: '',
-                 decimal: '.',
-                 allowZero: true,
-                 allowNegative: false
-             }
- */

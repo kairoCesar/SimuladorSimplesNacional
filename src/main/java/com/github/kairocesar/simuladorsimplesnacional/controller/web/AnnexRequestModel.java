@@ -12,9 +12,13 @@ public class AnnexRequestModel {
     private String valuePisCofinsReplacement;
     private String valueIssReplacement;
 
+    private String marketOption;
+
     public AnnexRequestModel() {}
 
-    public AnnexRequestModel(Integer annexOption, String rbt12, String salesValue, String salesValueToExterior, String[] taxesReplaced, String valueIcmsReplacement, String valuePisCofinsReplacement, String valueIssReplacement) {
+    public AnnexRequestModel(Integer annexOption, String rbt12, String salesValue,
+                             String salesValueToExterior, String[] taxesReplaced, String valueIcmsReplacement,
+                             String valuePisCofinsReplacement, String valueIssReplacement, String marketOption) {
         this.annexOption = annexOption;
         this.rbt12 = rbt12;
         this.salesValue = salesValue;
@@ -23,6 +27,7 @@ public class AnnexRequestModel {
         this.valueIcmsReplacement = valueIcmsReplacement;
         this.valuePisCofinsReplacement = valuePisCofinsReplacement;
         this.valueIssReplacement = valueIssReplacement;
+        this.marketOption = marketOption;
     }
 
     public Integer getAnnexOption() {
@@ -88,4 +93,13 @@ public class AnnexRequestModel {
     public void setValueIssReplacement(String valueIssReplacement) {
         this.valueIssReplacement = valueIssReplacement;
     }
+
+    public String getMarketOption() {
+        return marketOption;
+    }
+
+    public void setMarketOption(String marketOption) {
+        this.marketOption = marketOption;
+    }
+
 }

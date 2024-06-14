@@ -4,12 +4,15 @@
         const mercadoExternoRadio = document.getElementById('mercadoExterno');
         mercadoInternoRadio.addEventListener('click', updateFormFields);
         mercadoExternoRadio.addEventListener('click', updateFormFields);
+
+        updateFormFields();
     });
+
 
       // Define o tema padrão como escuro
       document.body.classList.add('dark-mode');
 
-    function updateFormFields() {
+function updateFormFields(loadPage) {
    const mercadoInternoChecked = document.getElementById('mercadoInterno').checked;
 
    const annexOption = document.getElementById('annexOption').value;
@@ -18,6 +21,14 @@
    const salesValueToExteriorField = document.getElementById('salesValueToExteriorField');
    const valueIcmsReplacementField = document.getElementById('valueIcmsReplacementField');
    const valuePisCofinsReplacementField = document.getElementById('valuePisCofinsReplacementField');
+   const valueIssReplacementField = document.getElementById('valueIssReplacementField');
+
+   const rbt12 = document.getElementById('rbt12');
+   const salesValue = document.getElementById('salesValue');
+   const salesValueToExterior = document.getElementById('salesValueToExterior');
+   const valueIcmsReplacement = document.getElementById('valueIcmsReplacement');
+   const valuePisCofinsReplacement = document.getElementById('valuePisCofinsReplacement');
+   const valueIssReplacement = document.getElementById('valueIssReplacement');
 
    // Oculta todos os campos
    rbt12Field.classList.add('hidden');
@@ -26,6 +37,18 @@
    valueIcmsReplacementField.classList.add('hidden');
    valuePisCofinsReplacementField.classList.add('hidden');
    valueIssReplacementField.classList.add('hidden');
+
+    if(!showTable) {
+       // Define o valor como null para todos os campos
+       rbt12.value = null;
+       salesValue.value = null;
+       salesValueToExterior.value = null;
+       valueIcmsReplacement.value = null;
+       valuePisCofinsReplacement.value = null;
+       valueIssReplacement.value = null;
+    }
+
+    showTable=false;
 
    //Para os campos obrigatorios
    salesValue.classList.add('hidden');
@@ -40,8 +63,8 @@
       valuePisCofinsReplacementField.classList.remove('hidden');
    } else if ((annexOption === '1' || annexOption === '2') && !mercadoInternoChecked) {
       rbt12Field.classList.remove('hidden');
-      salesValueToExterior.classList.remove('hidden');
       salesValueToExteriorField.classList.remove('hidden');
+      salesValueToExterior.classList.remove('hidden');
    } else if ((annexOption === '3' || annexOption === '4' || annexOption === '5') && mercadoInternoChecked) {
       rbt12Field.classList.remove('hidden');
       salesValueField.classList.remove('hidden');
@@ -69,18 +92,8 @@
       salesValueToExteriorField.classList.remove('hidden');
       salesValueToExterior.classList.remove('hidden');
    }
-
-       // Define o valor como null se o campo estiver oculto
-       if (salesValue.classList.contains('hidden')) {
-           salesValue.value = null;
-       }
-
-           // Define o valor como null se o campo estiver oculto
-           if (salesValueToExterior.classList.contains('hidden')) {
-               salesValueToExterior.value = null;
-           }
-
 }
+
 
  document.addEventListener("DOMContentLoaded", function() {
     const rbt12Field = document.getElementById("rbt12");
@@ -109,8 +122,11 @@
 
 
 function validateFormFieldsRequired() {
+    if(checkAnnexSelection()) {
+        openErrorModal('Selecione um anexo válido');
+        return true;
+    }
     const requiredFields = document.querySelectorAll('.obrigatorio:not(.hidden)');
-    console.log(requiredFields);
     for (let field of requiredFields) {
         if (!field.value.trim()) {
             openErrorModal(field.placeholder);
@@ -142,8 +158,18 @@ function openErrorModal(field) {
 }
 
 function unmaskMoney(value) {
-    const valorSemMascara = value.replace(/[^\d\-+\.]/g, '');
+    const valorSemPontos = value.replace(/\./g, '');
+    const valorComPonto = valorSemPontos.replace(',', '.');
+    return parseFloat(valorComPonto);
+}
 
-      // Converte o valor sem máscara para double e retorna
-      return parseFloat(valorSemMascara);
+function checkAnnexSelection() {
+  const annexOption = document.getElementById('annexOption');
+  const selectedValue = annexOption.value;
+  console.log("selectedValue", selectedValue)
+
+  if (selectedValue === '0') {
+    return true;
+  }
+
 }

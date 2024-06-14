@@ -9,7 +9,6 @@ public class MyErrorController  {
 
     @ExceptionHandler(Exception.class)
     public String handleError(Exception ex) {
-        System.out.println(ex.getStackTrace());
         return "error";
     }
 

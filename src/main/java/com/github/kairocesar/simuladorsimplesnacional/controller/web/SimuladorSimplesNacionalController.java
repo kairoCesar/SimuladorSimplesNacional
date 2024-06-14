@@ -27,7 +27,9 @@ public class SimuladorSimplesNacionalController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView simuladorSimplesNacional(AnnexRequestModel annexRequestModel) {
+        annexRequestModel.setMarketOption("interno");
         ModelAndView modelAndView = new ModelAndView("simples-nacional");
+        modelAndView.addObject("showTable", false);
         return modelAndView;
     }
 
@@ -55,10 +57,9 @@ public class SimuladorSimplesNacionalController {
 
         ModelAndView mv = new ModelAndView("simples-nacional");
         mv.addObject("showTable", true);
-        mv.addObject("anexoCalculo", annexRequestModel.getAnnexOption());
         mv.addObject("annexResponseDto", response);
         mv.addObject("mensagem", "Calculado com sucesso.");
-        mv.addObject("annexRequestModel", new AnnexRequestModel());
+        mv.addObject("annexRequestModel", annexRequestModel);
 
         return mv;
 
@@ -72,6 +73,10 @@ public class SimuladorSimplesNacionalController {
     }
 
     private static Double converterValorMaskMoneyParaDouble(String valorFormatado) {
+        valorFormatado = valorFormatado.replaceAll("\\.", "TEMP_POINT")
+                .replaceAll(",", ".")
+                .replaceAll("TEMP_POINT", ",");
+
         // Remove a máscara de formatação monetária (pontos, vírgulas e símbolos)
         String valorSemMascara = valorFormatado.replaceAll("[^\\d-\\+\\.]", "");
 

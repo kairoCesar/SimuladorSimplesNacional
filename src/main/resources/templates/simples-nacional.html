@@ -13,6 +13,10 @@
           integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMsVBLF94lIBAz5n8Lh5mR1V7j4G5Tf6uC1pWZC"
           crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script>
+        // Adiciona a variável global showTable ao JavaScript
+        var showTable = [[${showTable}]] ;
+    </script>
 </head>
 <body>
 <header class="text-center">
@@ -26,7 +30,7 @@
                 <div class="mb-3">
                     <label for="annexOption" class="form-label required">Anexo:</label>
                     <select id="annexOption" class="form-control" name="annexOption" style="width: 100%;" onchange="updateFormFields()" th:field="*{annexOption}" >
-                        <option value="" selected="selected">--Selecione--</option>
+                        <option value="0" selected="selected" >--Selecione--</option>
                         <option value="1">Anexo I</option>
                         <option value="2">Anexo II</option>
                         <option value="3">Anexo III</option>
@@ -38,13 +42,13 @@
                 </div>
                 <div class="mb-3 d-flex align-items-center">
                     <div class="form-check me-3">
-                        <input class="form-check-input" type="radio" name="marketOption" id="mercadoInterno" value="interno" checked>
+                        <input class="form-check-input" type="radio" name="marketOption" id="mercadoInterno" value="interno" th:field="*{marketOption}" th:checked="${annexRequestModel.marketOption == 'interno'}">
                         <label class="form-check-label" for="mercadoInterno">
                             Mercado Interno
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="marketOption" id="mercadoExterno" value="externo">
+                        <input class="form-check-input" type="radio" name="marketOption" id="mercadoExterno" value="externo" th:field="*{marketOption}" th:checked="${annexRequestModel.marketOption == 'externo'}">
                         <label class="form-check-label" for="mercadoExterno">
                             Mercado Externo
                         </label>
@@ -56,7 +60,8 @@
                 </div>
                 <div id="salesValueField" class="mb-3 hidden">
                     <label for="salesValue" class="form-label required">Receita Bruta no Mercado Interno:</label>
-                    <input type="text" class="form-control js-decimal obrigatorio" id="salesValue" name="salesValue" placeholder="Informe o campo Receita Bruta no mercado interno" th:field="*{salesValue}">
+                    <input type="text" class="form-control js-decimal obrigatorio" id="salesValue" name="salesValue"
+                           placeholder="Informe o campo Receita Bruta no mercado interno" th:field="*{salesValue}">
                 </div>
                 <div id="salesValueToExteriorField" class="mb-3 hidden">
                     <label for="salesValueToExterior" class="form-label required">Receita Bruta no Mercado Externo:</label>
@@ -108,14 +113,6 @@
                             <div class="card-body">
                                 <h5 class="card-title">Faixa</h5>
                                 <p class="card-text" th:text="${annexResponseDto.totalValues['Faixa: ']}" >X</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-4">
-                        <div class="card text-white bg-dark">
-                            <div class="card-body">
-                                <h5 class="card-title">Anexo do cálculo</h5>
-                                <p class="card-text" th:text="${anexoCalculo}" >X</p>
                             </div>
                         </div>
                     </div>
