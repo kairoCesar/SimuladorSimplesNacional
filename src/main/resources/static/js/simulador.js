@@ -130,10 +130,10 @@ function validateFieldsValueLessEquals() {
     const valueIssReplacementField = document.getElementById("valueIssReplacement");
 
     // Obtenha os valores dos campos e converta-os para números
-    const salesValue = parseFloat(salesValueField.value) || 0;
-    const valueIcmsReplacement = parseFloat(valueIcmsReplacementField.value) || 0;
-    const valuePisCofinsReplacement = parseFloat(valuePisCofinsReplacementField.value) || 0;
-    const valueIssReplacement = parseFloat(valueIssReplacementField.value) || 0;
+    const salesValue = unmaskMoney(salesValueField.value) || 0;
+    const valueIcmsReplacement = unmaskMoney(valueIcmsReplacementField.value) || 0;
+    const valuePisCofinsReplacement = unmaskMoney(valuePisCofinsReplacementField.value) || 0;
+    const valueIssReplacement = unmaskMoney(valueIssReplacementField.value) || 0;
 
     if(valueIcmsReplacement > salesValue) {
         openErrorModal("O valor de receita com ICMS retido por Substituição tributária não pode ser maior que o valor da Receita Bruta declarada");
