@@ -157,7 +157,7 @@ function validateFormFieldsRequired() {
     }
     const requiredFields = document.querySelectorAll('.obrigatorio:not(.hidden)');
     for (let field of requiredFields) {
-        if (!field.value.trim()) {
+        if (!field.value.trim() || (unmaskMoney(field.value) == 0)) {
             openErrorModal(field.placeholder);
             return true;
         }
