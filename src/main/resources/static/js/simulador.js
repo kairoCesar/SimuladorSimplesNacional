@@ -101,11 +101,7 @@ function updateFormFields(loadPage) {
 
     form.addEventListener("submit", function(event) {
 
-        if(validateFieldsValueLessEquals()) {
-            event.preventDefault(); // Impede o envio do formulário
-        }
-
-        if(validateFormFieldsRequired()){
+        if(validateFormFieldsRequired() || validateFieldsValueLessEquals()){
             event.preventDefault(); // Impede o envio do formulário
         }
 
