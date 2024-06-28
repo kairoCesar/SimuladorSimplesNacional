@@ -100,6 +100,11 @@ function updateFormFields(loadPage) {
     const form = rbt12Field.closest("form");
 
     form.addEventListener("submit", function(event) {
+
+        if(validateFieldsValueLessEquals()) {
+            event.preventDefault(); // Impede o envio do formulário
+        }
+
         if(validateFormFieldsRequired()){
             event.preventDefault(); // Impede o envio do formulário
         }
@@ -117,8 +122,36 @@ function updateFormFields(loadPage) {
     });
 });
 
+function validateFieldsValueLessEquals() {
+    const salesValueField = document.getElementById("salesValue");
 
+    const valueIcmsReplacementField = document.getElementById("valueIcmsReplacement");
+    const valuePisCofinsReplacementField = document.getElementById("valuePisCofinsReplacement");
+    const valueIssReplacementField = document.getElementById("valueIssReplacement");
 
+    // Obtenha os valores dos campos e converta-os para números
+    const salesValue = parseFloat(salesValueField.value) || 0;
+    const valueIcmsReplacement = parseFloat(valueIcmsReplacementField.value) || 0;
+    const valuePisCofinsReplacement = parseFloat(valuePisCofinsReplacementField.value) || 0;
+    const valueIssReplacement = parseFloat(valueIssReplacementField.value) || 0;
+
+    if(valueIcmsReplacement > salesValue) {
+        openErrorModal("O valor de receita com ICMS retido por Substituição tributária não pode ser maior que o valor da Receita Bruta declarada");
+        return true;
+    }
+
+    if(valuePisCofinsReplacement > salesValue) {
+        openErrorModal("O valor de receita com tributação monofásica de Pis e Cofins não pode ser maior que o valor da Receita Bruta declarada");
+        return true;
+    }
+
+    if(valueIssReplacement > salesValue) {
+        openErrorModal("O valor de receita com retenção de ISS não pode ser maior que o valor da Receita Bruta declarada");
+        return true
+    }
+
+    return false;
+}
 
 
 function validateFormFieldsRequired() {
