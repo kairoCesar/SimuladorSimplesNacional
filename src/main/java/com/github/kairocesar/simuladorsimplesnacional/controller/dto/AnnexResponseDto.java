@@ -3,6 +3,7 @@ package com.github.kairocesar.simuladorsimplesnacional.controller.dto;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class AnnexResponseDto {
@@ -13,7 +14,9 @@ public class AnnexResponseDto {
     private Map<String, Double> taxesFromService;
     private Map<String, String[]> taxesInfoToResponse = new LinkedHashMap<>();
     private Map<String, String> totalValues = new LinkedHashMap<>();
-    private final NumberFormat currencyFormat = new DecimalFormat("#,##0.00");
+    //private final NumberFormat currencyFormat = new DecimalFormat("#,##0.00");
+    private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+
 
 
     public AnnexResponseDto(Map<String, Double> taxes, double effectiveAliquot, double salesValue, int range) {
@@ -39,14 +42,14 @@ public class AnnexResponseDto {
             totalValueOfTaxes += taxToFormat.getValue();
             double taxValue = taxToFormat.getValue();
             String taxAliquot = String.format("%.4f %%", (taxValue / salesValue) * 100);
-            taxesInfoToResponse.put(taxToFormat.getKey(), new String[]{String.format("R$ %s", currencyFormat.format(taxValue)), taxAliquot});
+            taxesInfoToResponse.put(taxToFormat.getKey(), new String[]{String.format("%s", currencyFormat.format(taxValue)), taxAliquot});
         }
         putAndFormatTotalValues(totalValueOfTaxes);
     }
 
     private void putAndFormatTotalValues(double totalValueOfTaxes) {
         totalValues.put("Faixa: ", String.valueOf(range));
-        totalValues.put("Valor da guia: ", String.format("R$ %s", currencyFormat.format(totalValueOfTaxes)));
+        totalValues.put("Valor da guia: ", String.format("%s", currencyFormat.format(totalValueOfTaxes)));
         totalValues.put("Alíquota efetiva: ", String.format("%.4f %%", effectiveAliquot * 100));
         totalValues.put("Alíquota líquida: ", String.format("%.4f %%", (totalValueOfTaxes / salesValue) * 100));
     }
