@@ -100,21 +100,16 @@ function updateFormFields(loadPage) {
     const form = rbt12Field.closest("form");
 
     form.addEventListener("submit", function(event) {
+         const rbt12Value = unmaskMoney(rbt12Field.value);
+         if (rbt12Value > 3600000.00) {
+                    event.preventDefault(); // Impede o envio do formulário
 
-        if(validateFormFieldsRequired() || validateFieldsValueLessEquals()){
+                    const modal = new bootstrap.Modal(document.getElementById('valueExceedModal'));
+                    modal.show();
+         } else if(validateFormFieldsRequired() || validateFieldsValueLessEquals()){
             event.preventDefault(); // Impede o envio do formulário
         }
 
-        //const rbt12Value = parseFloat(rbt12Field.value.replace(/\./g, '').replace(',', '.'));
-        const rbt12Value = unmaskMoney(rbt12Field.value);
-        console.log(rbt12Field.value);
-        console.log(rbt12Value);
-        if (rbt12Value > 3600000.00) {
-            event.preventDefault(); // Impede o envio do formulário
-
-            const modal = new bootstrap.Modal(document.getElementById('valueExceedModal'));
-            modal.show();
-        }
     });
 });
 
