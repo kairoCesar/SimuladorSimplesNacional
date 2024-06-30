@@ -63,4 +63,7 @@ public class AnnexResponseDto {
     }
 
 
+    public void sumValuesMultipleAnnex(Double sum) {
+        totalValues.put("Valor da guia: ", String.format("%s", currencyFormat.format(sum)));
+    }
 }

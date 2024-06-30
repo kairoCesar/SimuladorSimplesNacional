@@ -6,6 +6,7 @@
         mercadoExternoRadio.addEventListener('click', updateFormFields);
 
         updateFormFields();
+        setInputValue();
     });
 
 
@@ -39,6 +40,15 @@ function updateFormFields(loadPage) {
    valueIssReplacementField.classList.add('hidden');
 
     if(!showTable) {
+       // Define o valor como null para todos os campos
+       salesValue.value = null;
+       salesValueToExterior.value = null;
+       valueIcmsReplacement.value = null;
+       valuePisCofinsReplacement.value = null;
+       valueIssReplacement.value = null;
+    }
+
+    if(!showTable && !checkSwitchCalculoEmDiferentesAnexos()) {
        // Define o valor como null para todos os campos
        rbt12.value = null;
        salesValue.value = null;
@@ -197,3 +207,27 @@ function checkAnnexSelection() {
   }
 
 }
+
+function checkSwitchCalculoEmDiferentesAnexos() {
+    var isChecked = document.getElementById('flexSwitchCheckChecked').checked;
+    return isChecked;
+}
+
+function getVariableTotalValue() {
+            const element = document.getElementById('total-value');
+            // Verifica se o elemento existe
+            if (element) {
+                // Retorna o conteúdo de texto do elemento
+                return element.innerText.trim() || null;
+            }
+            // Retorna null se o elemento não existir
+            return null;
+        }
+
+ function setInputValue() {
+            const value = getVariableTotalValue();
+            const inputElement = document.getElementById('valueAmountGuide');
+            if (inputElement) {
+                inputElement.value = value;
+            }
+        }

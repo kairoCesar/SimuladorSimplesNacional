@@ -14,11 +14,15 @@ public class AnnexRequestModel {
 
     private String marketOption;
 
+    private boolean multipleAnnex;
+
+    private String valueAmountGuide;
+
     public AnnexRequestModel() {}
 
     public AnnexRequestModel(Integer annexOption, String rbt12, String salesValue,
                              String salesValueToExterior, String[] taxesReplaced, String valueIcmsReplacement,
-                             String valuePisCofinsReplacement, String valueIssReplacement, String marketOption) {
+                             String valuePisCofinsReplacement, String valueIssReplacement, String marketOption, boolean multipleAnnex, String valueAmountGuide) {
         this.annexOption = annexOption;
         this.rbt12 = rbt12;
         this.salesValue = salesValue;
@@ -28,6 +32,8 @@ public class AnnexRequestModel {
         this.valuePisCofinsReplacement = valuePisCofinsReplacement;
         this.valueIssReplacement = valueIssReplacement;
         this.marketOption = marketOption;
+        this.multipleAnnex = multipleAnnex;
+        this.valueAmountGuide = valueAmountGuide;
     }
 
     public Integer getAnnexOption() {
@@ -100,6 +106,22 @@ public class AnnexRequestModel {
 
     public void setMarketOption(String marketOption) {
         this.marketOption = marketOption;
+    }
+
+    public boolean isMultipleAnnex() {
+        return multipleAnnex;
+    }
+
+    public void setMultipleAnnex(boolean multipleAnnex) {
+        this.multipleAnnex = multipleAnnex;
+    }
+
+    public String getValueAmountGuide() {
+        return valueAmountGuide;
+    }
+
+    public void setValueAmountGuide(String valueAmountGuide) {
+        this.valueAmountGuide = valueAmountGuide;
     }
 
 }

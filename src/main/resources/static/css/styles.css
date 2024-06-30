@@ -29,6 +29,14 @@ body.dark-mode {
     background-color: #3700b3;
     border-color: #3700b3;
 }
+.dark-mode .btn-outline-primary {
+    color: #ffffff;
+    border-color: #6200ea;
+}
+.dark-mode .btn-outline-primary:hover {
+    color: #6200ea;
+    background-color: #1f1f1f;
+}
 .dark-mode .social-icon {
     color: #ffffff;
     margin: 0 10px;
@@ -45,5 +53,3 @@ body.dark-mode {
 .dark-mode .hidden {
     display: none;
 }
-
-

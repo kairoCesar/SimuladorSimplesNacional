@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +52,16 @@ public class SimuladorSimplesNacionalController {
         );
 
         var response = annexCalculatorService.getTotalValues(annex);
+
+        if(annexRequestModel.isMultipleAnnex()) {
+            String currentValueString = response.getTotalValues().get("Valor da guia: ");
+            if (currentValueString != null) {
+                Double currentValue = converterValorMaskMoneyParaDouble(currentValueString);
+                Double valueAmountGuide = convertStringToDouble(annexRequestModel.getValueAmountGuide());
+                Double sum = currentValue + valueAmountGuide;
+                response.sumValuesMultipleAnnex(sum);
+            }
+        }
 
         ModelAndView mv = new ModelAndView("simples-nacional");
         mv.addObject("showTable", true);

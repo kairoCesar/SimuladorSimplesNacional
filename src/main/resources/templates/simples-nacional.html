@@ -47,11 +47,15 @@
                             Mercado Interno
                         </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check me-3">
                         <input class="form-check-input" type="radio" name="marketOption" id="mercadoExterno" value="externo" th:field="*{marketOption}" th:checked="${annexRequestModel.marketOption == 'externo'}">
                         <label class="form-check-label" for="mercadoExterno">
                             Mercado Externo
                         </label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" th:checked="*{multipleAnnex}" th:field="*{multipleAnnex}">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Cálculo em mais de um anexo</label>
                     </div>
                 </div>
                 <div id="rbt12Field" class="mb-3 hidden">
@@ -80,15 +84,23 @@
                     <input type="text" class="form-control js-decimal" id="valueIssReplacement" name="valueIssReplacement" placeholder="Receita com retenção de ISS" th:field="*{valueIssReplacement}">
                 </div>
 
+                <input type="hidden" id="valueAmountGuide" name="valueAmountGuide" th:field="*{valueAmountGuide}">
+
                 <button type="submit" class="btn btn-primary w-100">Calcular</button>
+                <!-- Botão para o canal no Telegram -->
+                <div class="mt-3 text-center">
+                    <a href="https://t.me/khamptech" class="btn btn-outline-primary w-100">
+                        Clique aqui e siga nosso canal no Telegram!
+                    </a>
+                </div>
             </form>
             <div class="container mt-4" th:if="${showTable}">
                 <div class="row">
                     <div class="col-md-6 col-lg-3 mb-4">
                         <div class="card text-white bg-dark">
                             <div class="card-body">
-                                <h5 class="card-title">Valor total da guia</h5>
-                                <p class="card-text" th:text="${annexResponseDto.totalValues['Valor da guia: ']}" >R$ XX,XX</p>
+                                <h5 class="card-title">Valor Final da Guia</h5>
+                                <p class="card-text" id="total-value" th:text="${annexResponseDto.totalValues['Valor da guia: ']}" >R$ XX,XX</p>
                             </div>
                         </div>
                     </div>
