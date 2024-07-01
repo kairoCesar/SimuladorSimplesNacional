@@ -12,6 +12,7 @@
           rel="stylesheet"
           integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMsVBLF94lIBAz5n8Lh5mR1V7j4G5Tf6uC1pWZC"
           crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <script>
         // Adiciona a variável global showTable ao JavaScript
@@ -54,37 +55,40 @@
                         </label>
                     </div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" th:checked="*{multipleAnnex}" th:field="*{multipleAnnex}">
-                        <label class="form-check-label" for="flexSwitchCheckChecked">Cálculo em mais de um anexo</label>
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" th:checked="*{multipleAnnex}" th:field="*{multipleAnnex}" onclick="clearAnnexResponseDto()">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">
+                            Cálculo em mais de um anexo
+                            <i class="fas fa-question-circle help-icon" title="Selecione esta opção se a empresa submetida ao cálculo realizou vendas e/ou prestou serviços em mais de um anexo. Assim, a RBT12 preenchida no primeiro cálculo será reutilizada nos próximos, e o valor da guia será sempre somado ao valor do cálculo no próximo anexo."></i>
+                        </label>
                     </div>
                 </div>
                 <div id="rbt12Field" class="mb-3 hidden">
                     <label for="rbt12" class="form-label required">RBT12:</label>
-                    <input type="text" class="form-control js-decimal obrigatorio" id="rbt12" name="rbt12" placeholder="Informe o campo RBT12" th:field="*{rbt12}">
+                    <input type="text" class="form-control js-decimal obrigatorio" id="rbt12" name="rbt12" inputmode="numeric" placeholder="Informe o campo RBT12" th:field="*{rbt12}">
                 </div>
                 <div id="salesValueField" class="mb-3 hidden">
                     <label for="salesValue" class="form-label required">Receita Bruta no Mercado Interno:</label>
-                    <input type="text" class="form-control js-decimal obrigatorio" id="salesValue" name="salesValue"
+                    <input type="text" class="form-control js-decimal obrigatorio" id="salesValue"  inputmode="numeric" name="salesValue"
                            placeholder="Informe o campo Receita Bruta no mercado interno" th:field="*{salesValue}">
                 </div>
                 <div id="salesValueToExteriorField" class="mb-3 hidden">
                     <label for="salesValueToExterior" class="form-label required">Receita Bruta no Mercado Externo:</label>
-                    <input type="text" class="form-control js-decimal obrigatorio" id="salesValueToExterior" name="salesValueToExterior" placeholder="Informe o campo Receita bruta no mercado externo" th:field="*{salesValueToExterior}">
+                    <input type="text" class="form-control js-decimal obrigatorio" id="salesValueToExterior"  inputmode="numeric" name="salesValueToExterior" placeholder="Informe o campo Receita bruta no mercado externo" th:field="*{salesValueToExterior}">
                 </div>
                 <div id="valueIcmsReplacementField" class="mb-3 hidden">
                     <label for="valueIcmsReplacement" class="form-label">Receita com ICMS retido por Substituição tributária:</label>
-                    <input type="text" class="form-control js-decimal" id="valueIcmsReplacement" name="valueIcmsReplacement" placeholder="Receita com ICMS retido por Substituição tributária" th:field="*{valueIcmsReplacement}">
+                    <input type="text" class="form-control js-decimal" id="valueIcmsReplacement" inputmode="numeric" name="valueIcmsReplacement" placeholder="Receita com ICMS retido por Substituição tributária" th:field="*{valueIcmsReplacement}">
                 </div>
                 <div id="valuePisCofinsReplacementField" class="mb-3 hidden">
                     <label for="valuePisCofinsReplacement" class="form-label">Receita com tributação monofásica de Pis e Cofins:</label>
-                    <input type="text" class="form-control js-decimal" id="valuePisCofinsReplacement" name="valuePisCofinsReplacement" placeholder="Receita com tributação monofásica de Pis e Cofins" th:field="*{valuePisCofinsReplacement}">
+                    <input type="text" class="form-control js-decimal" id="valuePisCofinsReplacement" inputmode="numeric" name="valuePisCofinsReplacement" placeholder="Receita com tributação monofásica de Pis e Cofins" th:field="*{valuePisCofinsReplacement}">
                 </div>
                 <div id="valueIssReplacementField" class="mb-3 hidden">
                     <label for="valueIssReplacement" class="form-label">Receita com retenção de ISS:</label>
-                    <input type="text" class="form-control js-decimal" id="valueIssReplacement" name="valueIssReplacement" placeholder="Receita com retenção de ISS" th:field="*{valueIssReplacement}">
+                    <input type="text" class="form-control js-decimal" id="valueIssReplacement" inputmode="numeric" name="valueIssReplacement" placeholder="Receita com retenção de ISS" th:field="*{valueIssReplacement}">
                 </div>
 
-                <input type="hidden" id="valueAmountGuide" name="valueAmountGuide" th:field="*{valueAmountGuide}">
+                <input type="hidden" id="valueAmountGuide" inputmode="numeric" name="valueAmountGuide" th:field="*{valueAmountGuide}">
 
                 <button type="submit" class="btn btn-primary w-100">Calcular</button>
                 <!-- Botão para o canal no Telegram -->
@@ -108,7 +112,7 @@
                         <div class="card text-white bg-dark">
                             <div class="card-body">
                                 <h5 class="card-title">Alíquota Efetiva</h5>
-                                <p class="card-text" th:text="${annexResponseDto.totalValues['Alíquota efetiva: ']}" >X,XX%</p>
+                                <p class="card-text" id="aliquota-efetiva" th:text="${annexResponseDto.totalValues['Alíquota efetiva: ']}" >X,XX%</p>
                             </div>
                         </div>
                     </div>
@@ -116,7 +120,7 @@
                         <div class="card text-white bg-dark">
                             <div class="card-body">
                                 <h5 class="card-title">Alíquota Líquida</h5>
-                                <p class="card-text" th:text="${annexResponseDto.totalValues['Alíquota líquida: ']}" >X,XX%</p>
+                                <p class="card-text" id="aliquota-liquida" th:text="${annexResponseDto.totalValues['Alíquota líquida: ']}" >X,XX%</p>
                             </div>
                         </div>
                     </div>
@@ -124,7 +128,7 @@
                         <div class="card text-white bg-dark">
                             <div class="card-body">
                                 <h5 class="card-title">Faixa</h5>
-                                <p class="card-text" th:text="${annexResponseDto.totalValues['Faixa: ']}" >X</p>
+                                <p class="card-text"  id="faixa" th:text="${annexResponseDto.totalValues['Faixa: ']}" >X</p>
                             </div>
                         </div>
                     </div>

@@ -231,3 +231,21 @@ function getVariableTotalValue() {
                 inputElement.value = value;
             }
         }
+
+     function clearAnnexResponseDto() {
+         var annexResponseDto = {};
+         document.getElementById('total-value').innerText = 'R$ 0,00';
+         document.getElementById('aliquota-efetiva').innerText = 'R$ 0,00';
+         document.getElementById('aliquota-liquida').innerText = 'R$ 0,00';
+         document.getElementById('faixa').innerText =  '-';
+
+
+          const inputElement = document.getElementById('valueAmountGuide');
+          inputElement.value = null;
+
+          // Esconder a div com a tabela
+             var tableDiv = document.querySelector('.table-responsive');
+             if (tableDiv) {
+                 tableDiv.style.display = 'none';
+             }
+     }

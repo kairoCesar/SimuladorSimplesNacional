@@ -31,6 +31,7 @@ public class SimuladorSimplesNacionalController {
         return modelAndView;
     }
 
+
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ModelAndView calcular(AnnexRequestModel annexRequestModel, BindingResult result, RedirectAttributes attributes) {
         var taxes = taxesReplacedFields(annexRequestModel);

@@ -53,3 +53,12 @@ body.dark-mode {
 .dark-mode .hidden {
     display: none;
 }
+
+.help-icon {
+    color: white; /* Define a cor do ícone como branco */
+    margin-left: 5px; /* Adiciona um espaço entre o texto e o ícone */
+}
+
+.help-icon:hover {
+    color: #ddd; /* Altera a cor do ícone quando o mouse está sobre ele */
+}
