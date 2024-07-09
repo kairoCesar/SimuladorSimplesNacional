@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 @RestController
 @RequestMapping("/annex")
 public class AnnexController {
@@ -20,7 +23,8 @@ public class AnnexController {
     }
 
     @PostMapping("/get_values")
-    public AnnexResponseDto getValues(@RequestBody AnnexRequestDto annexRequestDto) {
+    public AnnexResponseDto getValues(@RequestBody AnnexRequestDto annexRequestDto) throws UnknownHostException {
+
         return annexCalculatorService.getTotalValues(annexRequestDto);
     }
 
