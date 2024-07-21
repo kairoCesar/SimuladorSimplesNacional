@@ -41,7 +41,7 @@ public class AnnexResponseDto {
         for (Map.Entry<String, Double> taxToFormat : taxesFromService.entrySet()) {
             totalValueOfTaxes += taxToFormat.getValue();
             double taxValue = taxToFormat.getValue();
-            String taxAliquot = String.format("%.4f %%", (taxValue / salesValue) * 100);
+            String taxAliquot = String.format("%.2f %%", (taxValue / salesValue) * 100);
             taxesInfoToResponse.put(taxToFormat.getKey(), new String[]{String.format("%s", currencyFormat.format(taxValue)), taxAliquot});
         }
         putAndFormatTotalValues(totalValueOfTaxes);
@@ -50,8 +50,8 @@ public class AnnexResponseDto {
     private void putAndFormatTotalValues(double totalValueOfTaxes) {
         totalValues.put("Faixa: ", String.valueOf(range));
         totalValues.put("Valor da guia: ", String.format("%s", currencyFormat.format(totalValueOfTaxes)));
-        totalValues.put("Alíquota efetiva: ", String.format("%.4f %%", effectiveAliquot * 100));
-        totalValues.put("Alíquota líquida: ", String.format("%.4f %%", (totalValueOfTaxes / salesValue) * 100));
+        totalValues.put("Alíquota efetiva: ", String.format("%.2f %%", effectiveAliquot * 100));
+        totalValues.put("Alíquota líquida: ", String.format("%.2f %%", (totalValueOfTaxes / salesValue) * 100));
     }
 
     public Map<String, String[]> getTaxesInfoToResponse() {
