@@ -233,6 +233,9 @@ function getVariableTotalValue() {
         }
 
      function clearAnnexResponseDto() {
+         if(checkSwitchCalculoEmDiferentesAnexos()){
+            showModalDiferentesAnexos();
+         }
          var annexResponseDto = {};
          document.getElementById('total-value').innerText = 'R$ 0,00';
          document.getElementById('aliquota-efetiva').innerText = 'R$ 0,00';
@@ -249,3 +252,7 @@ function getVariableTotalValue() {
                  tableDiv.style.display = 'none';
              }
      }
+
+     function showModalDiferentesAnexos() {
+             $('#modalDiferenteAnexos').modal('show');
+         }
