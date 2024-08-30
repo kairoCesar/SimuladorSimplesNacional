@@ -62,3 +62,7 @@ body.dark-mode {
 .help-icon:hover {
     color: #ddd; /* Altera a cor do ícone quando o mouse está sobre ele */
 }
+
+.form-check.form-switch {
+    display: none;
+}
